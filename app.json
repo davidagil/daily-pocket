@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "daily-pocket",
+    "name": "Daily Pocket",
     "slug": "daily-pocket",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,7 +8,12 @@
     "scheme": "dailypocket",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/myicon/daily_pocket_icon.png",
+      "bundleIdentifier": "com.anonymous.daily-pocket",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Camera roll access required for profile image upload.",
+        "NSCameraUsageDescription": "Camera access require for profile image upload."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -17,7 +22,9 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.dailypocket",
+      "permissions": ["CAMERA", "READ_MEDIA_IMAGES"]
     },
     "web": {
       "output": "static",
@@ -34,7 +41,9 @@
             "imageWidth": 76
           }
         }
-      ]
+      ],
+      "expo-image",
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true,
