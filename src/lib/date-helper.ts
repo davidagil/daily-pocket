@@ -15,7 +15,8 @@ export const formatTimeAgo = (createdAt: string): string => {
 
 export const formatTimeRemaining = (expireddAt: string): string =>  {
     const now = new Date();
-    const expired = new Date(expireddAt);
+    // Z makes it UTC
+    const expired = new Date(expireddAt + "Z");
     const diff = expired.getTime() - now.getTime();
 
     if(diff <= 0) return "Expired";

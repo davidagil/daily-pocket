@@ -1,4 +1,5 @@
 import { AuthProvider, useAuth } from "@/context/AuthContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { Stack, useRouter, useSegments } from "expo-router";
 import React, { useEffect } from 'react';
 import { ActivityIndicator, View } from "react-native";
@@ -44,8 +45,10 @@ function RouteGuard() {
 }
 export default function RootLayout() {
   return (
-    <AuthProvider>
-      <RouteGuard />
-    </AuthProvider>
+    <ThemeProvider>
+       <AuthProvider>
+        <RouteGuard />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }

@@ -1,170 +1,441 @@
+// import { Post, PostLink } from "@/hooks/usePosts";
+// import { formatTimeAgo, formatTimeRemaining } from "@/lib/date-helper";
+// import { Image } from "expo-image";
+// import React from "react";
+// import {
+//     FlatList,
+//     Linking,
+//     StyleSheet,
+//     Text,
+//     TouchableOpacity,
+//     View,
+// } from "react-native";
+
+// interface PostCardProps {
+//   post: Post;
+//   currentUserId?: string;
+// }
+
+// const renderPostLink = ({ item }: { item: PostLink }) => {
+//   return (
+//     <TouchableOpacity
+//       style={styles.linkCard}
+//       onPress={() => Linking.openURL(item.url)}
+//       activeOpacity={0.7}
+//     >
+//       <Text style={styles.linkTitle}>{item.description}</Text>
+//       {/* <Text style={styles.linkUrl}>
+//         {item.url.replace(/^https?:\/\//, "")}
+//       </Text> */}
+//     </TouchableOpacity>
+//   );
+// };
+
+// const PostCard = ({ post }: PostCardProps) => {
+//   const postUser = post.profiles;
+//   const numColumns = post.postLinks.length > 1 ? 3 : 1;
+
+//   return (
+//     <View style={styles.postContainer}>
+//       <View style={styles.postHeader}>
+//         <View style={styles.userInfo}>
+//           {postUser?.profile_image_url ? (
+//             <Image
+//               cachePolicy="none"
+//               source={{ uri: postUser.profile_image_url }}
+//               style={styles.avatar}
+//             />
+//           ) : (
+//             <View style={[styles.avatar, styles.avatarPlaceholder]}>
+//               <Text style={styles.avatarText}>
+//                 {postUser?.name?.[0]?.toUpperCase() || "U"}
+//               </Text>
+//             </View>
+//           )}
+
+//           <View>
+//             <Text style={styles.username}>@{postUser?.username}</Text>
+//             <Text style={styles.timeAgo}>{formatTimeAgo(post.created_at)}</Text>
+//           </View>
+//         </View>
+
+//         <View style={styles.timeRemainingBadge}>
+//           <Text style={styles.timeRemainingText}>
+//             {formatTimeRemaining(post.expired_at)}
+//           </Text>
+//         </View>
+//       </View>
+
+//       <Image
+//         cachePolicy="none"
+//         source={{ uri: post.image_url }}
+//         style={styles.postImage}
+//         contentFit="cover"
+//       />
+
+//       <View style={styles.postFooter}>
+//         {post.description && (
+//           <Text style={styles.postDescription}>{post.description}</Text>
+//         )}
+
+//         {post.postLinks?.length > 0 && (
+//           <FlatList
+//             key={`post-links-${post.id}-${numColumns}`}
+//             data={post.postLinks}
+//             renderItem={renderPostLink}
+//             keyExtractor={(item) => item.id}
+//             numColumns={numColumns}
+//             scrollEnabled={false}
+//             columnWrapperStyle={numColumns > 1 ? styles.linksRow : undefined}
+//             contentContainerStyle={styles.linksContainer}
+//           />
+//         )}
+//       </View>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   postContainer: {
+//     backgroundColor: "#fff",
+//     borderRadius: 16,
+//     overflow: "hidden",
+//     marginBottom: 16,
+//     shadowColor: "#000",
+//     shadowOffset: { width: 0, height: 2 },
+//     shadowOpacity: 0.1,
+//     shadowRadius: 8,
+//     elevation: 3,
+//   },
+//   postHeader: {
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//     padding: 16,
+//   },
+//   userInfo: {
+//     flexDirection: "row",
+//     alignItems: "center",
+//     gap: 12,
+//   },
+//   avatar: {
+//     width: 40,
+//     height: 40,
+//     borderRadius: 20,
+//   },
+//   avatarPlaceholder: {
+//     backgroundColor: "#f0f0f0",
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   avatarText: {
+//     fontSize: 18,
+//     fontWeight: "600",
+//     color: "#666",
+//   },
+//   username: {
+//     fontSize: 16,
+//     fontWeight: "600",
+//     color: "#000",
+//   },
+//   timeAgo: {
+//     fontSize: 12,
+//     color: "#666",
+//   },
+//   timeRemainingBadge: {
+//     backgroundColor: "#000",
+//     marginLeft: 10,
+//     paddingHorizontal: 12,
+//     paddingVertical: 6,
+//     borderRadius: 12,
+//   },
+//   timeRemainingText: {
+//     color: "#fff",
+//     fontSize: 12,
+//     fontWeight: "600",
+//   },
+//   postImage: {
+//     width: "100%",
+//     aspectRatio: 1,
+//     backgroundColor: "#f5f5f5",
+//   },
+//   postFooter: {
+//     padding: 16,
+//     gap: 10,
+//   },
+//   postDescription: {
+//     fontSize: 15,
+//     color: "#111",
+//     lineHeight: 22,
+//     fontWeight: "400",
+//   },
+//   linksContainer: {
+//     gap: 8,
+//   },
+//   linksRow: {
+//     gap: 8,
+//     marginBottom: 8,
+//   },
+//   linkCard: {
+//     flex: 1,
+//     backgroundColor: "#f4f4f4",
+//     borderRadius: 12,
+//     paddingVertical: 12,
+//     paddingHorizontal: 10,
+//     borderWidth: 1,
+//     borderColor: "#ececec",
+//     minHeight: 44,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   linkTitle: {
+//     fontSize: 13,
+//     fontWeight: "600",
+//     color: "#000",
+//     textAlign: "center",
+//   },
+//   linkUrl: {
+//     fontSize: 12,
+//     color: "#6b6b6b",
+//     flexShrink: 1,
+//   },
+
+// });
+
+// export default PostCard;
+
+import { darkColors, lightColors, useThemeMode } from "@/context/ThemeContext";
 import { Post, PostLink } from "@/hooks/usePosts";
 import { formatTimeAgo, formatTimeRemaining } from "@/lib/date-helper";
 import { Image } from "expo-image";
 import React from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import {
+    FlatList,
+    Linking,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
 
 interface PostCardProps {
-    post: Post;
-    currentUserId?: string;
+  post: Post;
+  currentUserId?: string;
 }
 
-const renderPostLink = ({ item }: { item: PostLink }) => {
-    return (
-        <View style={styles.postlink}>
-            <Text style={styles.postlinkText}>{item.description}</Text>
-            <Text style={styles.postlinkUrl}>{item.url}</Text>
-        </View>
-    )
-}
+const PostCard = ({ post }: PostCardProps) => {
+  const { isDark } = useThemeMode();
+  const colors = isDark ? darkColors : lightColors;
 
-const PostCard = ({post, currentUserId}: PostCardProps) => {
-    const postUser = post.profiles;
+  const postUser = post.profiles;
+  const numColumns = post.postLinks.length > 1 ? 3 : 1;
 
-    
+  const renderPostLink = ({ item }: { item: PostLink }) => {
     return (
-        <View style={styles.postContainer}>
-        <View style={styles.postHeader}>
-          <View style={styles.userInfo}>
-            {postUser?.profile_image_url ? (
-              <Image
-                cachePolicy={"none"}
-                source={{ uri: postUser.profile_image_url }}
-                style={styles.avatar}
-              />
-            ) : (
-              <View style={[styles.avatar, styles.avatarPlaceholder]}>
-                <Text style={styles.avatarText}>
-                  {postUser?.name?.[0]?.toUpperCase() || "U"}
-                </Text>
-              </View>
-            )}
-  
-            <View>
-              <Text style={styles.username}>
-                {`@${postUser?.username}`}
+      <TouchableOpacity
+        style={[
+          styles.linkCard,
+          {
+            backgroundColor: colors.card,
+            borderColor: colors.border,
+          },
+        ]}
+        onPress={() => Linking.openURL(item.url)}
+        activeOpacity={0.7}
+      >
+        <Text style={[styles.linkTitle, { color: colors.text }]}>
+          {item.description}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <View
+      style={[
+        styles.postContainer,
+        {
+          backgroundColor: colors.cardBackground,
+          shadowOpacity: isDark ? 0.18 : 0.1,
+        },
+      ]}
+    >
+      <View style={styles.postHeader}>
+        <View style={styles.userInfo}>
+          {postUser?.profile_image_url ? (
+            <Image
+              cachePolicy="none"
+              source={{ uri: postUser.profile_image_url }}
+              style={styles.avatar}
+            />
+          ) : (
+            <View
+              style={[
+                styles.avatar,
+                styles.avatarPlaceholder,
+                { backgroundColor: colors.card },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.avatarText,
+                  { color: colors.mutedText },
+                ]}
+              >
+                {postUser?.name?.[0]?.toUpperCase() || "U"}
               </Text>
-              <Text style={styles.timeAgo}>{formatTimeAgo(post.created_at)}</Text>
             </View>
-          </View>
-  
-          {/* Post content */}
-          <View style={styles.timeRemainingBadge}>
-            <Text style={styles.timeRemainingText}>
-              {formatTimeRemaining(post.expired_at)}
+          )}
+
+          <View>
+            <Text style={[styles.username, { color: colors.text }]}>
+              @{postUser?.username}
+            </Text>
+            <Text style={[styles.timeAgo, { color: colors.mutedText }]}>
+              {formatTimeAgo(post.created_at)}
             </Text>
           </View>
         </View>
-  
-        <Image
-          cachePolicy={"none"}
-          source={{ uri: post.image_url }}
-          style={styles.postImage}
-          contentFit="cover"
-          onError={(err) => console.log("Post image failed:", err, post.image_url)}
-        />
-  
-        <View style={styles.postFooter}>
-          {post.description && (
-            <Text style={styles.postDescription}>{post.description}</Text>
-          )}
+
+        <View
+          style={[
+            styles.timeRemainingBadge,
+            {
+              backgroundColor: colors.text,
+            },
+          ]}
+        >
+          <Text
+            style={[
+              styles.timeRemainingText,
+              { color: isDark ? colors.background : "#fff" },
+            ]}
+          >
+            {formatTimeRemaining(post.expired_at)}
+          </Text>
+        </View>
+      </View>
+
+      <Image
+        cachePolicy="none"
+        source={{ uri: post.image_url }}
+        style={[
+          styles.postImage,
+          { backgroundColor: colors.card },
+        ]}
+        contentFit="cover"
+      />
+
+      <View style={styles.postFooter}>
+        {post.description && (
+          <Text style={[styles.postDescription, { color: colors.text }]}>
+            {post.description}
+          </Text>
+        )}
+
+        {post.postLinks?.length > 0 && (
           <FlatList
+            key={`post-links-${post.id}-${numColumns}`}
             data={post.postLinks}
             renderItem={renderPostLink}
             keyExtractor={(item) => item.id}
+            numColumns={numColumns}
             scrollEnabled={false}
-            />
-        </View>
+            columnWrapperStyle={numColumns > 1 ? styles.linksRow : undefined}
+            contentContainerStyle={styles.linksContainer}
+          />
+        )}
       </View>
-    );
-}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    postContainer: {
-        backgroundColor: "#fff",
-        borderRadius: 16,
-        overflow: "hidden",
-        marginBottom: 16,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
-        elevation: 3
-    },
-    postHeader: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: 16
-    },
-    userInfo: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 12
-    },
-    avatar: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-    },
-    avatarPlaceholder: {
-        backgroundColor: "#f0f0f0",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    avatarText: {
-        fontSize: 18,
-        fontWeight: "600",
-        color: "#666",
-    },
-    username: {
-        fontSize: 16,
-        fontWeight: "600",
-        color: "#000",
-    },
-    timeAgo: {
-        fontSize: 12,
-        color: "#666",
-    },
-    timeRemainingBadge: {
-        backgroundColor: "#000",
-        marginLeft: 10,
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 12,
-    },
-    timeRemainingText: {
-        color: "#fff",
-        fontSize: 12,
-        fontWeight: "600"
-    },
-    postImage: {
-        width: "100%",
-        aspectRatio: 1,
-        backgroundColor: "#f5f5f5",
-    },
-    postFooter: {
-        padding: 16,
-    },
-    postDescription: {
-        fontSize: 15,
-        color: "#000",
-        marginBottom: 8,
-        lineHeight: 20,
-    },
-    postInfo: {
-        fontSize: 14,
-        color: "#666",
-    },
-    postlink: {
-     
-    },
-    postlinkText: {
-
-    },
-    postlinkUrl: {
-
-    }
+  postContainer: {
+    borderRadius: 16,
+    overflow: "hidden",
+    marginBottom: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  postHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 16,
+  },
+  userInfo: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
+  avatarPlaceholder: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  avatarText: {
+    fontSize: 18,
+    fontWeight: "600",
+  },
+  username: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  timeAgo: {
+    fontSize: 12,
+  },
+  timeRemainingBadge: {
+    marginLeft: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 12,
+  },
+  timeRemainingText: {
+    fontSize: 12,
+    fontWeight: "600",
+  },
+  postImage: {
+    width: "100%",
+    aspectRatio: 1,
+  },
+  postFooter: {
+    padding: 16,
+    gap: 10,
+  },
+  postDescription: {
+    fontSize: 15,
+    lineHeight: 22,
+    fontWeight: "400",
+  },
+  linksContainer: {
+    gap: 8,
+  },
+  linksRow: {
+    gap: 8,
+    marginBottom: 8,
+  },
+  linkCard: {
+    flex: 1,
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    minHeight: 44,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  linkTitle: {
+    fontSize: 13,
+    fontWeight: "600",
+    textAlign: "center",
+  },
 });
 
 export default PostCard;
