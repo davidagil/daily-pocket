@@ -1,7 +1,7 @@
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { ActivityIndicator, Alert, Image, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const LoginScreen = () => {
@@ -36,7 +36,11 @@ const LoginScreen = () => {
     <SafeAreaView edges={["top", "bottom"]} style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
        <View style={styles.content}>
-        <Text style={styles.title}>Welcome Back</Text>
+       <Image
+          source={require("../../../assets/myicon/daily_pocket_icon_transparent.png")}
+          style={{ width: 300, height: 300 }}
+        />
+        {/* <Text style={styles.title}>Daily Pocket</Text> */}
         <View style={styles.form}>
           <TextInput 
             placeholder='Email' 
@@ -77,13 +81,14 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
+    alignItems: 'center',
     padding: 24,
+    marginTop: 40
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: 8
+    marginBottom: 20
   },
   subtitle: {
     fontSize: 16,
