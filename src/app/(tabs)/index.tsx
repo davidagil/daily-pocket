@@ -176,7 +176,13 @@ export default function Index() {
           <Text style={{ color: colors.mutedText }}>No Posts found</Text>
         }
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.text}          
+            colors={[colors.text]} 
+            progressBackgroundColor={colors.card}
+          />
         }
       />
 
